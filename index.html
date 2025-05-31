@@ -1,0 +1,197 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mole Milk Empire</title>
+  <style>
+    body {
+      background: linear-gradient(135deg, #8b5e3c, #3f2b1d);
+      font-family: Arial, sans-serif;
+      color: #f8f4e3;
+      text-align: center;
+      padding: 2rem;
+      overflow-x: hidden;
+      cursor: url('https://cdn.pixabay.com/photo/2021/11/12/09/15/cheese-6789094_1280.png'), auto;
+    }
+
+    h1 {
+      font-size: 3.5rem;
+      text-shadow: 3px 3px #000;
+      margin-bottom: 0.5rem;
+    }
+
+    h2 {
+      margin-top: 2rem;
+      font-size: 2rem;
+      color: #ffdb58;
+      text-shadow: 2px 2px #000;
+    }
+
+    .mole-img {
+      width: 200px;
+      border-radius: 50%;
+      margin: 1rem;
+      cursor: pointer;
+      animation: bounce 3s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-20px) rotate(5deg); }
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 2rem 0;
+    }
+
+    li {
+      background: rgba(255, 248, 220, 0.3);
+      margin: 1rem auto;
+      padding: 1rem;
+      width: 60%;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.5);
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+    }
+
+    li.completed {
+      background: rgba(173, 255, 47, 0.5);
+      text-decoration: line-through;
+      transform: rotate(-2deg) scale(1.05);
+    }
+
+    li:hover {
+      background: rgba(255, 248, 220, 0.5);
+    }
+
+    .footer {
+      font-size: 1rem;
+      margin-top: 2rem;
+      color: #ffdb58;
+    }
+
+    .pun {
+      font-style: italic;
+      color: #ffd700;
+    }
+
+    .call-button {
+      background: #f4a460;
+      color: #000;
+      padding: 1rem 2rem;
+      border: none;
+      border-radius: 10px;
+      font-size: 1.5rem;
+      margin-top: 2rem;
+      cursor: pointer;
+      box-shadow: 0 0 10px #000;
+    }
+
+    .call-button:hover {
+      background: #ffd700;
+    }
+
+    .counter {
+      font-size: 1.2rem;
+      margin-top: 1rem;
+      color: #90ee90;
+    }
+
+    .countdown {
+      font-size: 1.3rem;
+      margin-top: 2rem;
+      color: #ffa07a;
+    }
+
+    audio, .sound-effects {
+      display: block;
+      margin: 2rem auto;
+    }
+  </style>
+</head>
+<body>
+  <h1>Mole Milk: From Farm to Fridge</h1>
+  <img src="https://upload.wikimedia.org/wikipedia/commons/d/d2/Mole_illustration.png" alt="Mole Illustration" class="mole-img" id="moleImage" />
+
+  <h2>🐾 Daily Mole Milk Checklist</h2>
+  <ul id="checklist">
+    <li>Harvest Mole Milk – "Moley Moley Moley!"</li>
+    <li>Pasteurise at 72°C – "For Your Eyes Moley"</li>
+    <li>Churn into Mole Cheese – "Making Mountains out of Mole Hills"</li>
+    <li>Design Rustic Labels – "The One and Moley"</li>
+    <li>Pitch to Paul Theakston (Black Sheep Brewery) – "Call Paul Daily!"</li>
+    <li>Prepare for The Mole Milk Festival – "Adrian Mole's Got Talent!"</li>
+  </ul>
+
+  <div class="counter">
+    Mole Milk Counter: <span id="counterValue">0</span> litres produced!
+  </div>
+
+  <button class="call-button" onclick="playSound(); alert('Calling Paul Theakston... Pitching Mole Milk daily! 🐾🥛')">
+    📞 Call Paul Theakston
+  </button>
+
+  <div class="countdown" id="countdown"></div>
+
+  <p class="footer">
+    🧀 Every bottle of Mole Milk supports <span class="pun">Adrian Mole</span> and the <span class="pun">Super Mole Cheese Dream</span>.
+  </p>
+
+  <audio autoplay loop>
+    <source src="https://www.fesliyanstudios.com/play-mp3/335" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
+  <audio class="sound-effects" id="soundEffect">
+    <source src="https://freesound.org/data/previews/523/523657_11861804-lq.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    const checklist = document.getElementById('checklist');
+    const counter = document.getElementById('counterValue');
+    let counterValue = 0;
+
+    checklist.addEventListener('click', (e) => {
+      if (e.target.tagName === 'LI' && !e.target.classList.contains('completed')) {
+        e.target.classList.add('completed');
+        counterValue += 3;
+        counter.textContent = counterValue;
+        playSound();
+      }
+    });
+
+    document.getElementById('moleImage').addEventListener('click', () => {
+      alert("Did you know? The Giant Golden Mole can grow up to 23cm and is a milk-producing marvel!");
+      playSound();
+    });
+
+    function playSound() {
+      const sound = document.getElementById('soundEffect');
+      sound.currentTime = 0;
+      sound.play();
+    }
+
+    const countdown = document.getElementById('countdown');
+    const festivalDate = new Date('2025-07-15T12:00:00');
+    function updateCountdown() {
+      const now = new Date();
+      const diff = festivalDate - now;
+      if (diff <= 0) {
+        countdown.textContent = "🎉 The Mole Milk Festival is happening now!";
+      } else {
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const minutes = Math.floor((diff / (1000 * 60)) % 60);
+        countdown.textContent = `Countdown to Mole Milk Festival: ${days} days, ${hours} hours, ${minutes} minutes`;
+      }
+    }
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+  </script>
+</body>
+</html>
